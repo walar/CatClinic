@@ -1,0 +1,8 @@
+proprietaire_chat:
+  -
+    id_proprietaire: 1
+    id_chat: 1
+  -
+    id_proprietaire: 1
+    id_chat: 2
+    
