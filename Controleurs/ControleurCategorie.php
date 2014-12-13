@@ -2,10 +2,28 @@
 
 final class ControleurCategorie
 {
-
-  public function defautAction()
+  // retourne la catégorie correspondant à l'indentifiant
+  //   ou 'false' si aucune catégorie n'a pu être récuperée
+  private function donneCategorieParIdentifiant($I_identifiantCategorie)
   {
-    BoiteAOutils::redirigerVers('categorie/liste');
+    if (!$I_identifiantCategorie)
+    {
+      return false;
+    }
+
+    // l'identifiant donné correspond t-il à une entrée en base ?
+    try
+    {
+        $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
+        $O_categorie = $O_categorieMapper->trouverParIdentifiant($I_identifiantCategorie);
+    }
+    catch (Exception $O_exception)
+    {
+        // L'identifiant passé ne correspond à rien...
+        return false;
+    }
+
+    return $O_categorie;
   }
 
   public function listeAction()
@@ -35,82 +53,93 @@ final class ControleurCategorie
   {
     $I_identifiantCategorie = $A_parametres[0];
 
-    $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
-    $O_categorie = $O_categorieMapper->trouverParIdentifiant($I_identifiantCategorie);
-    $O_categorieMapper->supprimer($O_categorie);
+    $O_categorie = $this->donneCategorieParIdentifiant($I_identifiantCategorie);
 
-    BoiteAOutils::redirigerVers('categorie/liste');
+    if (false === $O_categorie)
+    {
+      // impossible de récupérer une catégorie
+
+      BoiteAOutils::redirigerVers('categorie/liste');
+    }
+    else if (BoiteAOutils::donneMethodeRequete() === 'DELETE')
+    {
+      // on supprime la catégorie de la bdd
+
+      $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
+      $O_categorieMapper->supprimer($O_categorie);
+
+      // on redirige vers la liste !
+      BoiteAOutils::redirigerVers('categorie/liste');
+    }
+    else
+    {
+      // on affiche le formulaire
+
+      Vue::montrer('categorie/suppr', array('categorie' => $O_categorie));
+    }
   }
 
   public function editAction(Array $A_parametres)
   {
     $I_identifiantCategorie = $A_parametres[0];
 
-    if (!$I_identifiantCategorie)
+    $O_categorie = $this->donneCategorieParIdentifiant($I_identifiantCategorie);
+
+    if (false === $O_categorie)
     {
-      // l'identifiant est absent, inutile de continuer !
-      // on renvoit vers la liste des categories
+      // impossible de récupérer une catégorie
+
       BoiteAOutils::redirigerVers('categorie/liste');
     }
-    else
+    else if (BoiteAOutils::donneMethodeRequete() === 'PUT')
     {
-      // l'identifiant donné correspond t-il à une entrée en base ?
+      // on modifie la catégorie en bdd
 
-      try
-      {
-          $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
-          $O_categorie = $O_categorieMapper->trouverParIdentifiant($I_identifiantCategorie);
-      }
-      catch (Exception $O_exception)
-      {
-          // L'identifiant passé ne correspond à rien...
-          BoiteAOutils::redirigerVers('categorie/liste');
-      }
-
-      // Si l'on est ici c'est qu'on a tout ce qu'il nous faut (une ctégorie !)
-      // Nous la passons à la vue correspondante
-      Vue::montrer('categorie/edit', array('categorie' => $O_categorie));
-    }
-  }
-
-  public function miseajourAction(Array $A_parametres)
-  {
-    if ($_SERVER['REQUEST_METHOD'] == 'POST')
-    {
-      $I_identifiantCategorie = $A_parametres[0];
       $S_titre = $_POST['titre'];
       // TODO: vérifications sur l'input, même si PDO nettoie derrière
 
-      $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
-      $O_categorie = $O_categorieMapper->trouverParIdentifiant($I_identifiantCategorie);
-
-      if ($S_titre != $O_categorie->donneTitre()) {
+      if ($S_titre !== $O_categorie->donneTitre())
+      {
           $O_categorie->changeTitre($S_titre);
+
+          $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
           $O_categorieMapper->actualiser($O_categorie);
       }
 
       // on redirige vers la liste !
       BoiteAOutils::redirigerVers('categorie/liste');
     }
+    else
+    {
+      // on affiche notre formulaire
+
+      Vue::montrer('categorie/edit', array('categorie' => $O_categorie));
+    }
   }
 
   public function creerAction(Array $A_parametres)
   {
-    if ($_SERVER['REQUEST_METHOD'] == 'POST')
+    if (BoiteAOutils::donneMethodeRequete() === 'POST')
     {
+      // on créer la catégorie en bdd
+
       $S_titre = $_POST['titre'];
       // TODO: vérifications sur l'input, même si PDO nettoie derrière
 
-      $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
       $O_categorie = new Categorie();
       $O_categorie->changeTitre($S_titre);
 
+      $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
       $O_categorieMapper->creer($O_categorie);
 
       // on redirige vers la liste !
       BoiteAOutils::redirigerVers('categorie/liste');
     }
+    else
+    {
+      // on affiche notre formulaire
 
-    Vue::montrer('categorie/creer');
+      Vue::montrer('categorie/creer');
+    }
   }
 }

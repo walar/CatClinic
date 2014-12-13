@@ -84,7 +84,7 @@ final class Constantes
 
     // divers
 
-    const NB_MAX_UTILISATEURS_PAR_PAGE = 1;
+    const NB_MAX_UTILISATEURS_PAR_PAGE = 2;
 
     const NB_MAX_CATEGORIES_PAR_PAGE = 2;
 

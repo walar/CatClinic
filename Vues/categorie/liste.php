@@ -1,46 +1,54 @@
-<h1>Categories</h1>
-<table>
-<caption>Liste des catégories</caption>
-<thead>
-    <tr>
-        <td>Identifiant</td>
-        <td>Titre</td>
-    </tr>
-</thead>
-<?php
+<h1>Liste des catégories</h1>
 
-if (count($A_vue['categories']))
-{
-    echo '<tbody>';
+<a href="/categorie/creer">Créer une nouvelle catégorie</a>
 
-    foreach ($A_vue['categories'] as $O_categorie)
-    {
-        // Allez, on ressort echo, print...
-        print '<tr>';
-        echo '<td>'. $O_categorie->donneIdentifiant() . '</td><td>' .
-                     $O_categorie->donneTitre() . '</td>';
+<?php if (count($A_vue['categories'])): ?>
 
-        echo '<td><a href="/categorie/edit/' . $O_categorie->donneIdentifiant() . '">Modifier</a></td>';
+    <table>
 
-        print '<td><a href="/categorie/suppr/' . $O_categorie->donneIdentifiant() .
-                '" onclick="return(confirm(\'Etes-vous sûr de vouloir supprimer cette catégorie ?\'));">
-                Effacer</a></td>';
+        <thead>
+            <tr>
+                <td>Titre</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
 
-        echo '</tr>';
-    }
+        <tbody>
+            <?php foreach ($A_vue['categories'] as $O_categorie): ?>
+                <tr>
+                    <td>
+                        <?php echo $O_categorie->donneTitre(); ?>
+                    </td>
 
-    echo '</tbody>';
-}
-?>
-</table>
-<?php
-    if (isset($A_vue['pagination']))
-    {
-        echo '<div>';
-        foreach ($A_vue['pagination'] as $I_numeroPage => $S_lien)
-        {
-            echo '&nbsp;' . ($S_lien ? '<a href="/' . $S_lien . '">' . $I_numeroPage . '</a>' : $I_numeroPage);
-        }
-        echo '</div>';
-    }
-?>
+                    <td>
+                        <a href="/categorie/edit/<?php echo $O_categorie->donneIdentifiant(); ?>">
+                            Modifier
+                        </a>
+                        &nbsp;
+                        <a href="/categorie/suppr/<?php echo $O_categorie->donneIdentifiant(); ?>">
+                            Effacer
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+
+    </table>
+
+<?php else: ?>
+
+    <p>Il n'y a aucune catégorie ici.</p>
+
+<?php endif; ?>
+
+<?php if (isset($A_vue['pagination'])): ?>
+   <div>
+        <?php foreach ($A_vue['pagination'] as $I_numeroPage => $S_lien): ?>
+            <?php if (isset($S_lien)): ?>
+                &nbsp;<a href="/<?php echo $S_lien; ?>"><?php echo $I_numeroPage; ?></a>
+            <?php else: ?>
+                <?php echo $I_numeroPage; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>

@@ -15,59 +15,7 @@ hr {
     clear: both;
     margin: 20px 0;
 }
-fieldset, legend {
-    padding: 3px;
-    border: 1px solid #aaa;
-}
-legend {
-    font-weight: bold;
-    background-color: #ddd;
-    margin-bottom: 6px;
-}
-fieldset {
-    margin-bottom: 10px;
-}
-form div.row {
-    clear: left;
-    display: block;
-    margin: 5px 0 0;
-    padding: 1px 3px;
-}
-label {
-    display: block;
-    float: left;
-    width: 150px;
-    font-weight: bold;
-    text-align: right;
-    margin: 0 0 5px;
-    padding: 3px 5px;
-}
-input {
-    border: 1px solid #ccc;
-    padding: 1px 3px;
-    width: 200px;
-    float: left;
-}
-select {
-    float: left;
-    margin-right: 2px;
-}
-input:focus, select:focus {
-    background-color: #f9f9f9;
-}
-input.submitbutton {
-    border: 2px solid #333;
-    background-color: #369;
-    color: #fff;
-    cursor: pointer;
-    font-weight: bold;
-    width: auto;
-}
-input.radio {
-    width: auto;
-    border: none;
-    float: none;
-}
+
 .radiooption {
     margin-right: 10px;
 }
@@ -93,7 +41,7 @@ input.radio {
 }
 #header li {
     display: inline;
-    margin-right: 10px; 
+    margin-right: 10px;
 }
 #header .message {
     color: #eee;
