@@ -77,14 +77,14 @@ final class CategorieMapper extends SqlDataMapper
 
     public function creer (Categorie $O_categorie)
     {
-        if (!$O_categorie->donneNom() || !$O_categorie->donneAge() || !$O_categorie->donneTatouage())
+        if (!$O_categorie->donneTitre())
         {
             throw new Exception ("Impossible d'enregistrer la catégorie");
         }
 
         $S_titre = $O_categorie->donneTitre();
 
-        $S_requete = "INSERT INTO " . $this->_S_nomTable . " (titre) VALUES (?, ?, ?)";
+        $S_requete = "INSERT INTO " . $this->_S_nomTable . " (titre) VALUES (?)";
         $A_paramsRequete = array($S_titre);
 
         // j'insère en table et inserer me renvoie l'identifiant de mon nouvel enregistrement...je le stocke
