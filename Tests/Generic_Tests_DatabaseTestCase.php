@@ -1,5 +1,5 @@
 <?php
-
+// Classe de base pour les tests BdD
 abstract class Generic_Tests_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
 {
     // Pour éviter le message "Cannot truncate a table referenced in a foreign key constraint"
