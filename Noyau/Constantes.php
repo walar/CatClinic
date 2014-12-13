@@ -76,9 +76,17 @@ final class Constantes
 
     const TABLE_PRATICIEN = 'praticien';
 
+    const TABLE_CATEGORIE = 'categorie';
+
+    const TABLE_AUTEUR = 'auteur';
+
+    const TABLE_ARTICLE = 'article';
+
     // divers
 
     const NB_MAX_UTILISATEURS_PAR_PAGE = 1;
+
+    const NB_MAX_CATEGORIES_PAR_PAGE = 2;
 
     const DATE_FORMAT = 'Y-m-d H:i:s';
 }
