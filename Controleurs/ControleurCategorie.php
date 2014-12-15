@@ -26,6 +26,11 @@ final class ControleurCategorie
     return $O_categorie;
   }
 
+  public function defautAction()
+  {
+    BoiteAOutils::redirigerVers('categorie/liste');
+  }
+
   public function listeAction()
   {
     $this->paginerAction();
@@ -34,19 +39,51 @@ final class ControleurCategorie
   public function paginerAction(Array $A_parametres = null)
   {
     $I_page = isset($A_parametres[0]) ? $A_parametres[0] : 1;
+
+    $A_parametresVue = array();
+
     $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
 
     $O_listeur = new ListeurCategorie($O_categorieMapper);
+
+    if (isset($A_parametres[1]) && !strncmp($A_parametres[1], 'tri-', 4))
+    {
+      /*
+        ce parametre est sous la forme 'tri-$attribut-$ordre'
+        avec '$ordre' optionnel (par defaut 'asc')
+        donc on concatene '-defaut' pour être sure de recupérer une valeure pour l'ordre de tri
+      */
+
+      $S_tri = $A_parametres[1] . '-defaut';
+
+      list( /* tri */, $S_attributTri, $S_ordreTri) = explode('-', $S_tri);
+
+      /*
+        Si l'attribut de tri a été changé on l'ajoute aux parametres de la vue
+        pour pouvoir definir les nouvelles urls du paginateur
+      */
+      if (false !== $O_listeur->changeAttributTri($S_attributTri))
+      {
+        $A_parametresVue['tri'] = 'tri-' . $S_attributTri;
+
+        if (false !== $O_listeur->changeOrdreTri($S_ordreTri))
+        {
+          $A_parametresVue['tri'] .= '-' . $S_ordreTri;
+        }
+      }
+    }
+
     $O_paginateur = new Paginateur($O_listeur);
     $O_paginateur->changeLimite(Constantes::NB_MAX_CATEGORIES_PAR_PAGE);
 
-    // on doit afficher puis installer la pagination
     $A_categories = $O_paginateur->recupererPage($I_page);
 
     $A_pagination = $O_paginateur->paginer();
 
-    // voir ce qu'on met dans categories !
-    Vue::montrer ('categorie/liste', array('categories' => $A_categories, 'pagination' => $A_pagination));
+    $A_parametresVue['categories'] = $A_categories;
+    $A_parametresVue['pagination'] = $A_pagination;
+
+    Vue::montrer ('categorie/liste', $A_parametresVue);
   }
 
   public function supprAction(Array $A_parametres)

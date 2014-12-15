@@ -8,7 +8,10 @@
 
         <thead>
             <tr>
-                <td>Titre</td>
+                <td>Titre
+                    <a href="/categorie/paginer/1/tri-titre" title="Tri par ordre croissant">&uarr;</a>
+                    <a href="/categorie/paginer/1/tri-titre-desc" title="Tri par ordre décroissant">&darr;</a>
+                </td>
                 <td>Actions</td>
             </tr>
         </thead>
@@ -44,8 +47,15 @@
 <?php if (isset($A_vue['pagination'])): ?>
    <div>
         <?php foreach ($A_vue['pagination'] as $I_numeroPage => $S_lien): ?>
+            &nbsp;
             <?php if (isset($S_lien)): ?>
-                &nbsp;<a href="/<?php echo $S_lien; ?>"><?php echo $I_numeroPage; ?></a>
+                <?php
+                    if (isset($A_vue['tri']))
+                    {
+                        $S_lien .= '/' . $A_vue['tri'];
+                    }
+                ?>
+                <a href="/<?php echo $S_lien; ?>"><?php echo $I_numeroPage; ?></a>
             <?php else: ?>
                 <?php echo $I_numeroPage; ?>
             <?php endif; ?>

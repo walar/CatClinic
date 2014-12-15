@@ -9,8 +9,8 @@ final class CategorieMapper extends SqlDataMapper
         $this->_O_connexion = $O_connexion;
     }
 
-     public function trouverParIntervalle ($I_debut, $I_fin) {
-        $S_requete = 'SELECT id, titre FROM ' . $this->_S_nomTable . ' ORDER BY titre ASC';
+     public function trouverParIntervalle ($I_debut, $I_fin, $S_attributTri, $S_ordreTri) {
+        $S_requete = 'SELECT id, titre FROM ' . $this->_S_nomTable . " ORDER BY $S_attributTri $S_ordreTri";
 
         if (!is_null($I_debut) && !is_null($I_fin))
         {
