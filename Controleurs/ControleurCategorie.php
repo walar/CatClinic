@@ -33,7 +33,27 @@ final class ControleurCategorie
 
   public function listeAction()
   {
-    $this->paginerAction();
+    if (BoiteAOutils::donneMethodeRequete() === 'POST')
+    {
+      if (isset($_POST['nb_categorie_par_page']))
+      {
+        $I_CatParPage = intval($_POST['nb_categorie_par_page']);
+
+        if ($I_CatParPage > 0)
+        {
+          BoiteAOutils::rangerDansSession('nb_categorie_par_page', $I_CatParPage);
+        }
+      }
+
+      /*
+       on redirige vers la liste
+      */
+      BoiteAOutils::redirigerVers('categorie/liste');
+    }
+    else
+    {
+      $this->paginerAction();
+    }
   }
 
   public function paginerAction(Array $A_parametres = null)
@@ -74,7 +94,14 @@ final class ControleurCategorie
     }
 
     $O_paginateur = new Paginateur($O_listeur);
-    $O_paginateur->changeLimite(Constantes::NB_MAX_CATEGORIES_PAR_PAGE);
+    $I_limit = BoiteAOutils::recupererDepuisSession('nb_categorie_par_page');
+
+    if (is_null($I_limit))
+    {
+      $I_limit = Constantes::NB_DEFAULT_CATEGORIES_PAR_PAGE;
+    }
+
+    $O_paginateur->changeLimite($I_limit);
 
     $A_categories = $O_paginateur->recupererPage($I_page);
 
@@ -82,6 +109,8 @@ final class ControleurCategorie
 
     $A_parametresVue['categories'] = $A_categories;
     $A_parametresVue['pagination'] = $A_pagination;
+    $A_parametresVue['nb_categorie_par_page'] = $I_limit;
+    $A_parametresVue['entite_par_page'] = explode(',', Constantes::ENTITE_PAR_PAGE);
 
     Vue::montrer ('categorie/liste', $A_parametresVue);
   }

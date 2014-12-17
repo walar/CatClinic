@@ -86,7 +86,9 @@ final class Constantes
 
     const NB_MAX_UTILISATEURS_PAR_PAGE = 2;
 
-    const NB_MAX_CATEGORIES_PAR_PAGE = 2;
-
     const DATE_FORMAT = 'Y-m-d H:i:s';
+
+    const ENTITE_PAR_PAGE = '2,5,10,25,50';
+
+    const NB_DEFAULT_CATEGORIES_PAR_PAGE = 5;
 }
