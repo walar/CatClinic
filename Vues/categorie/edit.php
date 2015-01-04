@@ -10,11 +10,7 @@
   <input type="hidden" name="_method" value="PUT" />
 
   <div id="corpForm">
-    <p>
-      <label for="titre" title="Veuillez saisir un titre">Catégorie</label>
-      <input type="text" name="titre" id="titre" title="Veuillez saisir un titre"
-              value="<?php echo $O_categorie->donneTitre(); ?>" required />
-    </p>
+    <?php include 'form.php'; ?>
   </div>
 
   <div id="piedForm">

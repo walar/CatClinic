@@ -14,13 +14,13 @@ final class ControleurCategorie
     // l'identifiant donné correspond t-il à une entrée en base ?
     try
     {
-        $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
-        $O_categorie = $O_categorieMapper->trouverParIdentifiant($I_identifiantCategorie);
+      $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
+      $O_categorie = $O_categorieMapper->trouverParIdentifiant($I_identifiantCategorie);
     }
     catch (Exception $O_exception)
     {
         // L'identifiant passé ne correspond à rien...
-        return false;
+      return false;
     }
 
     return $O_categorie;
@@ -48,10 +48,10 @@ final class ControleurCategorie
       /*
        on redirige vers la liste
       */
-      BoiteAOutils::redirigerVers('categorie/liste');
-    }
-    else
-    {
+       BoiteAOutils::redirigerVers('categorie/liste');
+     }
+     else
+     {
       $this->paginerAction();
     }
   }
@@ -74,138 +74,138 @@ final class ControleurCategorie
         donc on concatene '-defaut' pour être sure de recupérer une valeure pour l'ordre de tri
       */
 
-      $S_tri = $A_parametres[1] . '-defaut';
+        $S_tri = $A_parametres[1] . '-defaut';
 
-      list( /* tri */, $S_attributTri, $S_ordreTri) = explode('-', $S_tri);
+        list( /* tri */, $S_attributTri, $S_ordreTri) = explode('-', $S_tri);
 
       /*
         Si l'attribut de tri a été changé on l'ajoute aux parametres de la vue
         pour pouvoir definir les nouvelles urls du paginateur
       */
-      if (false !== $O_listeur->changeAttributTri($S_attributTri))
-      {
-        $A_parametresVue['tri'] = 'tri-' . $S_attributTri;
-
-        if (false !== $O_listeur->changeOrdreTri($S_ordreTri))
+        if (false !== $O_listeur->changeAttributTri($S_attributTri))
         {
-          $A_parametresVue['tri'] .= '-' . $S_ordreTri;
+          $A_parametresVue['tri'] = 'tri-' . $S_attributTri;
+
+          if (false !== $O_listeur->changeOrdreTri($S_ordreTri))
+          {
+            $A_parametresVue['tri'] .= '-' . $S_ordreTri;
+          }
         }
+      }
+
+      $O_paginateur = new Paginateur($O_listeur);
+      $I_limit = BoiteAOutils::recupererDepuisSession('nb_categorie_par_page');
+
+      if (is_null($I_limit))
+      {
+        $I_limit = Constantes::NB_DEFAULT_CATEGORIES_PAR_PAGE;
+      }
+
+      $O_paginateur->changeLimite($I_limit);
+
+      $A_categories = $O_paginateur->recupererPage($I_page);
+
+      $A_pagination = $O_paginateur->paginer();
+
+      $A_parametresVue['categories'] = $A_categories;
+      $A_parametresVue['pagination'] = $A_pagination;
+      $A_parametresVue['nb_categorie_par_page'] = $I_limit;
+      $A_parametresVue['entite_par_page'] = explode(',', Constantes::ENTITE_PAR_PAGE);
+
+      Vue::montrer ('categorie/liste', $A_parametresVue);
+    }
+
+    public function supprAction(Array $A_parametres)
+    {
+      $I_identifiantCategorie = $A_parametres[0];
+
+      $O_categorie = $this->donneCategorieParIdentifiant($I_identifiantCategorie);
+
+      if (false === $O_categorie)
+      {
+      // impossible de récupérer une catégorie
+
+        BoiteAOutils::redirigerVers('categorie/liste');
+      }
+      else if (BoiteAOutils::donneMethodeRequete() === 'DELETE')
+      {
+      // on supprime la catégorie de la bdd
+
+        $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
+        $O_categorieMapper->supprimer($O_categorie);
+
+      // on redirige vers la liste !
+        BoiteAOutils::redirigerVers('categorie/liste');
+      }
+      else
+      {
+      // on affiche le formulaire
+
+        Vue::montrer('categorie/suppr', array('categorie' => $O_categorie));
       }
     }
 
-    $O_paginateur = new Paginateur($O_listeur);
-    $I_limit = BoiteAOutils::recupererDepuisSession('nb_categorie_par_page');
-
-    if (is_null($I_limit))
+    public function editAction(Array $A_parametres)
     {
-      $I_limit = Constantes::NB_DEFAULT_CATEGORIES_PAR_PAGE;
-    }
+      $I_identifiantCategorie = $A_parametres[0];
 
-    $O_paginateur->changeLimite($I_limit);
+      $O_categorie = $this->donneCategorieParIdentifiant($I_identifiantCategorie);
 
-    $A_categories = $O_paginateur->recupererPage($I_page);
-
-    $A_pagination = $O_paginateur->paginer();
-
-    $A_parametresVue['categories'] = $A_categories;
-    $A_parametresVue['pagination'] = $A_pagination;
-    $A_parametresVue['nb_categorie_par_page'] = $I_limit;
-    $A_parametresVue['entite_par_page'] = explode(',', Constantes::ENTITE_PAR_PAGE);
-
-    Vue::montrer ('categorie/liste', $A_parametresVue);
-  }
-
-  public function supprAction(Array $A_parametres)
-  {
-    $I_identifiantCategorie = $A_parametres[0];
-
-    $O_categorie = $this->donneCategorieParIdentifiant($I_identifiantCategorie);
-
-    if (false === $O_categorie)
-    {
+      if (false === $O_categorie)
+      {
       // impossible de récupérer une catégorie
 
-      BoiteAOutils::redirigerVers('categorie/liste');
-    }
-    else if (BoiteAOutils::donneMethodeRequete() === 'DELETE')
-    {
-      // on supprime la catégorie de la bdd
-
-      $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
-      $O_categorieMapper->supprimer($O_categorie);
-
-      // on redirige vers la liste !
-      BoiteAOutils::redirigerVers('categorie/liste');
-    }
-    else
-    {
-      // on affiche le formulaire
-
-      Vue::montrer('categorie/suppr', array('categorie' => $O_categorie));
-    }
-  }
-
-  public function editAction(Array $A_parametres)
-  {
-    $I_identifiantCategorie = $A_parametres[0];
-
-    $O_categorie = $this->donneCategorieParIdentifiant($I_identifiantCategorie);
-
-    if (false === $O_categorie)
-    {
-      // impossible de récupérer une catégorie
-
-      BoiteAOutils::redirigerVers('categorie/liste');
-    }
-    else if (BoiteAOutils::donneMethodeRequete() === 'PUT')
-    {
+        BoiteAOutils::redirigerVers('categorie/liste');
+      }
+      else if (BoiteAOutils::donneMethodeRequete() === 'PUT')
+      {
       // on modifie la catégorie en bdd
 
-      $S_titre = $_POST['titre'];
+        $S_titre = $_POST['titre'];
       // TODO: vérifications sur l'input, même si PDO nettoie derrière
 
-      if ($S_titre !== $O_categorie->donneTitre())
-      {
+        if ($S_titre !== $O_categorie->donneTitre())
+        {
           $O_categorie->changeTitre($S_titre);
 
           $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
           $O_categorieMapper->actualiser($O_categorie);
-      }
+        }
 
       // on redirige vers la liste !
-      BoiteAOutils::redirigerVers('categorie/liste');
-    }
-    else
-    {
+        BoiteAOutils::redirigerVers('categorie/liste');
+      }
+      else
+      {
       // on affiche notre formulaire
 
-      Vue::montrer('categorie/edit', array('categorie' => $O_categorie));
+        Vue::montrer('categorie/edit', array('categorie' => $O_categorie));
+      }
     }
-  }
 
-  public function creerAction(Array $A_parametres)
-  {
-    if (BoiteAOutils::donneMethodeRequete() === 'POST')
+    public function creerAction(Array $A_parametres)
     {
+      if (BoiteAOutils::donneMethodeRequete() === 'POST')
+      {
       // on créer la catégorie en bdd
 
-      $S_titre = $_POST['titre'];
+        $S_titre = $_POST['titre'];
       // TODO: vérifications sur l'input, même si PDO nettoie derrière
 
-      $O_categorie = new Categorie();
-      $O_categorie->changeTitre($S_titre);
+        $O_categorie = new Categorie();
+        $O_categorie->changeTitre($S_titre);
 
-      $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
-      $O_categorieMapper->creer($O_categorie);
+        $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
+        $O_categorieMapper->creer($O_categorie);
 
       // on redirige vers la liste !
-      BoiteAOutils::redirigerVers('categorie/liste');
-    }
-    else
-    {
+        BoiteAOutils::redirigerVers('categorie/liste');
+      }
+      else
+      {
       // on affiche notre formulaire
 
-      Vue::montrer('categorie/creer');
+        Vue::montrer('categorie/creer');
+      }
     }
   }
-}
