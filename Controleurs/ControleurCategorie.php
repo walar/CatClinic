@@ -159,26 +159,36 @@ final class ControleurCategorie
       }
       else if (BoiteAOutils::donneMethodeRequete() === 'PUT')
       {
-      // on modifie la catégorie en bdd
+        // on modifie la catégorie en bdd
 
-        $S_titre = $_POST['titre'];
-      // TODO: vérifications sur l'input, même si PDO nettoie derrière
+        $S_titre = trim($_POST['titre']);
 
         if ($S_titre !== $O_categorie->donneTitre())
         {
           $O_categorie->changeTitre($S_titre);
 
+          $O_validateur = new ValidateurCategorie($O_categorie);
+
+          if (!$O_validateur->estValide())
+          {
+            Vue::montrer('categorie/edit', array(
+                         'categorie' => $O_categorie,
+                         'validateur' => $O_validateur
+            ));
+
+            return;
+          }
+
           $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
           $O_categorieMapper->actualiser($O_categorie);
         }
 
-      // on redirige vers la liste !
+        // on redirige vers la liste !
         BoiteAOutils::redirigerVers('categorie/liste');
       }
       else
       {
-      // on affiche notre formulaire
-
+        // on affiche notre formulaire
         Vue::montrer('categorie/edit', array('categorie' => $O_categorie));
       }
     }
@@ -187,18 +197,28 @@ final class ControleurCategorie
     {
       if (BoiteAOutils::donneMethodeRequete() === 'POST')
       {
-      // on créer la catégorie en bdd
-
-        $S_titre = $_POST['titre'];
-      // TODO: vérifications sur l'input, même si PDO nettoie derrière
+        // on créer la catégorie en bdd
+        $S_titre = trim($_POST['titre']);
 
         $O_categorie = new Categorie();
         $O_categorie->changeTitre($S_titre);
 
+        $O_validateur = new ValidateurCategorie($O_categorie);
+
+        if (!$O_validateur->estValide())
+        {
+          Vue::montrer('categorie/creer', array(
+                       'categorie' => $O_categorie,
+                       'validateur' => $O_validateur
+          ));
+
+          return;
+        }
+
         $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
         $O_categorieMapper->creer($O_categorie);
 
-      // on redirige vers la liste !
+        // on redirige vers la liste !
         BoiteAOutils::redirigerVers('categorie/liste');
       }
       else
