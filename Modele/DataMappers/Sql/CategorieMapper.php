@@ -75,6 +75,47 @@ final class CategorieMapper extends SqlDataMapper
         }
     }
 
+    public function trouverParTitre($S_titre)
+    {
+        if (isset($S_titre))
+        {
+            $S_requete    = "SELECT id, titre FROM " . $this->_S_nomTable .
+                            " WHERE titre = ?";
+            $A_paramsRequete = array($S_titre);
+
+            if ($A_categorie = $this->_O_connexion->projeter($S_requete, $A_paramsRequete))
+            {
+                $O_categorieTemporaire = $A_categorie[0];
+
+                if (is_object($O_categorieTemporaire))
+                {
+                    if (class_exists($this->_S_classeMappee))
+                    {
+                        $O_categorie = new $this->_S_classeMappee;
+
+                        $O_categorie->changeIdentifiant($O_categorieTemporaire->id);
+                        $O_categorie->changeTitre($O_categorieTemporaire->titre);
+
+                        return $O_categorie;
+                    }
+                }
+                else
+                {
+                    throw new Exception ("Une erreur s'est produite pour la catégorie de titre '$S_titre'");
+                }
+            }
+            else
+            {
+                // Je n'ai rien trouvé, je lève une exception pour le signaler au client de ma classe
+                throw new Exception ("Il n'existe pas de catégorie pour le titre '$S_titre'");
+            }
+        }
+        else
+        {
+            throw new Exception ("Le titre d'une catégorie ne peut être vide");
+        }
+    }
+
     public function creer (Categorie $O_categorie)
     {
         if (!$O_categorie->donneTitre())

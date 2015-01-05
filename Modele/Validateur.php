@@ -22,28 +22,28 @@ abstract class Validateur
     $B_estValide = true;
     $S_erreurs = "";
 
-    $S_valeur = trim($S_valeur);
+    //$S_valeur = trim($S_valeur);
 
     if (!empty($S_valeur))
     {
-      $I_taille = strlen($S_valeur);
+      $I_taille = strlen(utf8_decode($S_valeur));
 
       if ($I_tailleMin > $I_taille || $I_taille > $I_tailleMax)
       {
-        $S_erreurs .= "Doit être d'une longueur comprise entre $I_tailleMin et $I_tailleMax caractères. ";
+        $S_erreurs .= "Doit être d'une longueur comprise entre $I_tailleMin et $I_tailleMax caractères.";
 
         $B_estValide = false;
       }
     }
     else if (!$B_nullable)
     {
-      $S_erreurs .= 'Doit contenir une valeur. ';
+      $S_erreurs .= 'Doit contenir une valeur.';
 
       $B_estValide = false;
     }
 
-    $this->A_estValide[$S_nom] = $B_estValide;
-    $this->A_erreurs[$S_nom] = $S_erreurs;
+    $this->changeValide($S_nom, $B_estValide);
+    $this->ajouteErreur($S_nom, $S_erreurs);
 
     return $B_estValide;
   }
@@ -89,4 +89,26 @@ abstract class Validateur
     return $S_erreurs;
   }
 
+  public function ajouteErreur($S_nom, $S_erreur)
+  {
+    if (isset($S_nom))
+    {
+      if (isset($this->A_erreurs[$S_nom]))
+      {
+        $this->A_erreurs[$S_nom] = $this->A_erreurs[$S_nom] . ' ' . $S_erreur;
+      }
+      else
+      {
+        $this->A_erreurs[$S_nom] = $S_erreur;
+      }
+    }
+  }
+
+  public function changeValide($S_nom, $B_estValide)
+  {
+    if (isset($S_nom))
+    {
+      $this->A_estValide[$S_nom] = $B_estValide;
+    }
+  }
 }
