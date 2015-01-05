@@ -10,7 +10,8 @@ class ValidateurCategorie extends Validateur
 
   protected function verifier($O_categorie)
   {
-    if ($this->verifierString('titre', $O_categorie->donneTitre()))
+    if ($this->verifierString('titre', $O_categorie->donneTitre()) &&
+          null === $O_categorie->donneIdentifiant() )
     {
       try
       {

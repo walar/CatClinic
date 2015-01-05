@@ -13,7 +13,8 @@ class ValidateurAuteur extends Validateur
     $this->verifierString('nom', $O_auteur->donneNom());
     $this->verifierString('prenom', $O_auteur->donneprenom());
 
-    if ($this->verifierString('mail', $O_auteur->donneMail()))
+    if ($this->verifierString('mail', $O_auteur->donneMail()) &&
+          null === $O_auteur->donneIdentifiant() )
     {
       try
       {
