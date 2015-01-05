@@ -17,10 +17,10 @@
     <thead>
       <tr>
         <td>Titre
-          <?php if ($B_estTrie && $A_paramTri[1] == 'titre' && $A_paramTri[2] == 'asc'): ?>
+          <?php if (!$B_estTrie || ($B_estTrie && $A_paramTri[1] == 'titre' && $A_paramTri[2] == 'asc')): ?>
             &uarr;
           <?php else: ?>
-            <a href="/categorie/paginer/1/tri-titre" title="Tri par ordre croissant">
+            <a href="/categorie/paginer/1" title="Tri par ordre croissant">
               &uarr;
             </a>
           <?php endif; ?>
