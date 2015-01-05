@@ -91,4 +91,5 @@ final class Constantes
     const ENTITE_PAR_PAGE = '2,5,10,25,50';
 
     const NB_DEFAULT_CATEGORIES_PAR_PAGE = 5;
+    const NB_DEFAULT_AUTEURS_PAR_PAGE = 5;
 }

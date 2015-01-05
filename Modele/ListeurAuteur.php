@@ -1,14 +1,13 @@
 <?php
 
-// Cette classe sert à lister des catégories
+// Cette classe sert pour l'instant à lister des utilisateurs
 
-final class ListeurCategorie extends ListeurTriable implements ListeurInterface
+final class ListeurAuteur extends ListeurTriable implements ListeurInterface
 {
-  public function __construct($O_mapper)
-  {
+  public function __construct($O_mapper) {
     parent::__construct($O_mapper);
 
-    $this->changeAttributTri('titre');
+    $this->changeAttributTri('nom');
   }
 
   public function lister ($I_debut = null, $I_fin = null)
@@ -25,6 +24,6 @@ final class ListeurCategorie extends ListeurTriable implements ListeurInterface
 
   public function estUnAttributDeTri($S_attribut)
   {
-    return in_array($S_attribut, ['id', 'titre']);
+    return in_array($S_attribut, ['id', 'nom', 'prenom', 'mail']);
   }
 }

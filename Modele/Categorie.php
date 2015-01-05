@@ -6,14 +6,14 @@ final class Categorie
   private $_S_titre;
 
   // getters
-  public function changeIdentifiant($identifiant)
+  public function changeIdentifiant($I_identifiant)
   {
-    $this->_I_identifiant = $identifiant;
+    $this->_I_identifiant = $I_identifiant;
   }
 
-  public function changeTitre($titre)
+  public function changeTitre($S_titre)
   {
-    $this->_S_titre = $titre;
+    $this->_S_titre = $S_titre;
   }
 
   // setters
