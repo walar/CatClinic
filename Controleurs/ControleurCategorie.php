@@ -4,7 +4,7 @@ final class ControleurCategorie
 {
   // retourne la catégorie correspondant à l'indentifiant
   //   ou 'false' si aucune catégorie n'a pu être récuperée
-  private function donneCategorieParIdentifiant($I_identifiantCategorie)
+  private function _donneCategorieParIdentifiant($I_identifiantCategorie)
   {
     if (!$I_identifiantCategorie)
     {
@@ -119,7 +119,7 @@ final class ControleurCategorie
     {
       $I_identifiantCategorie = $A_parametres[0];
 
-      $O_categorie = $this->donneCategorieParIdentifiant($I_identifiantCategorie);
+      $O_categorie = $this->_donneCategorieParIdentifiant($I_identifiantCategorie);
 
       if (false === $O_categorie)
       {
@@ -149,7 +149,7 @@ final class ControleurCategorie
     {
       $I_identifiantCategorie = $A_parametres[0];
 
-      $O_categorie = $this->donneCategorieParIdentifiant($I_identifiantCategorie);
+      $O_categorie = $this->_donneCategorieParIdentifiant($I_identifiantCategorie);
 
       if (false === $O_categorie)
       {
@@ -160,31 +160,26 @@ final class ControleurCategorie
       else if (BoiteAOutils::donneMethodeRequete() === 'PUT')
       {
         // on modifie la catégorie en bdd
+        $A_params = array();
+        $A_params['titre'] = $_POST['titre'];
 
-        $S_titre = trim($_POST['titre']);
+        $O_validateur = new ValidateurCategorie($O_categorie, $A_params);
 
-        if ($S_titre !== $O_categorie->donneTitre())
+        if ($O_validateur->estValide())
         {
-          $O_categorie->changeTitre($S_titre);
-
-          $O_validateur = new ValidateurCategorie($O_categorie);
-
-          if (!$O_validateur->estValide())
-          {
-            Vue::montrer('categorie/edit', array(
-                         'categorie' => $O_categorie,
-                         'validateur' => $O_validateur
-            ));
-
-            return;
-          }
-
           $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
           $O_categorieMapper->actualiser($O_categorie);
-        }
 
-        // on redirige vers la liste !
-        BoiteAOutils::redirigerVers('categorie/liste');
+          // on redirige vers la liste !
+          BoiteAOutils::redirigerVers('categorie/liste');
+        }
+        else
+        {
+          Vue::montrer('categorie/edit', array(
+                       'categorie' => $O_categorie,
+                       'validateur' => $O_validateur
+                       ));
+        }
       }
       else
       {
@@ -198,28 +193,27 @@ final class ControleurCategorie
       if (BoiteAOutils::donneMethodeRequete() === 'POST')
       {
         // on créer la catégorie en bdd
-        $S_titre = trim($_POST['titre']);
+        $A_params = array();
+        $A_params['titre'] = $_POST['titre'];
 
         $O_categorie = new Categorie();
-        $O_categorie->changeTitre($S_titre);
 
-        $O_validateur = new ValidateurCategorie($O_categorie);
+        $O_validateur = new ValidateurCategorie($O_categorie, $A_params);
 
-        if (!$O_validateur->estValide())
+        if ($O_validateur->estValide())
+        {
+          $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
+          $O_categorieMapper->creer($O_categorie);
+
+          // on redirige vers la liste !
+          BoiteAOutils::redirigerVers('categorie/liste');
+        }
+        else
         {
           Vue::montrer('categorie/creer', array(
-                       'categorie' => $O_categorie,
                        'validateur' => $O_validateur
-          ));
-
-          return;
+                       ));
         }
-
-        $O_categorieMapper = FabriqueDeMappers::fabriquer('categorie', Connexion::recupererInstance());
-        $O_categorieMapper->creer($O_categorie);
-
-        // on redirige vers la liste !
-        BoiteAOutils::redirigerVers('categorie/liste');
       }
       else
       {

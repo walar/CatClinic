@@ -44,6 +44,11 @@ final class Auteur
     return $this->_S_prenom;
   }
 
+  public function donneNomComplet()
+  {
+    return $this->_S_prenom . ' ' . $this->_S_nom;
+  }
+
   public function donneMail()
   {
     return $this->_S_mail;

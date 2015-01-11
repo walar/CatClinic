@@ -4,7 +4,7 @@ final class ControleurAuteur
 {
   // retourne l'auteur correspondant à l'indentifiant
   //   ou 'false' si aucun auteur n'a pu être récuperé
-  private function donneAuteurParIdentifiant($I_identifiantAuteur)
+  private function _donneAuteurParIdentifiant($I_identifiantAuteur)
   {
     if (!$I_identifiantAuteur)
     {
@@ -119,7 +119,7 @@ final class ControleurAuteur
     {
       $I_identifiantAuteur = $A_parametres[0];
 
-      $O_auteur = $this->donneAuteurParIdentifiant($I_identifiantAuteur);
+      $O_auteur = $this->_donneAuteurParIdentifiant($I_identifiantAuteur);
 
       if (false === $O_auteur)
       {
@@ -149,7 +149,7 @@ final class ControleurAuteur
     {
       $I_identifiantAuteur = $A_parametres[0];
 
-      $O_auteur = $this->donneAuteurParIdentifiant($I_identifiantAuteur);
+      $O_auteur = $this->_donneAuteurParIdentifiant($I_identifiantAuteur);
 
       if (false === $O_auteur)
       {
@@ -160,37 +160,28 @@ final class ControleurAuteur
       else if (BoiteAOutils::donneMethodeRequete() === 'PUT')
       {
         // on modifie la catégorie en bdd
+        $A_params = array();
+        $A_params['nom'] = $_POST['nom'];
+        $A_params['prenom'] = $_POST['prenom'];
+        $A_params['mail'] = $_POST['mail'];
 
-        $S_nom = trim($_POST['nom']);
-        $S_prenom = trim($_POST['prenom']);
-        $S_mail = trim($_POST['mail']);
+        $O_validateur = new ValidateurAuteur($O_auteur, $A_params);
 
-        if ($S_nom !== $O_auteur->donneNom() ||
-            $S_prenom !== $O_auteur->donnePrenom() ||
-            $S_mail !== $O_auteur->donneMail())
+        if ($O_validateur->estValide())
         {
-          $O_auteur->changeNom($S_nom);
-          $O_auteur->changePrenom($S_prenom);
-          $O_auteur->changeMail($S_mail);
-
-          $O_validateur = new ValidateurAuteur($O_auteur);
-
-          if (!$O_validateur->estValide())
-          {
-            Vue::montrer('auteur/edit', array(
-                         'auteur' => $O_auteur,
-                         'validateur' => $O_validateur
-            ));
-
-            return;
-          }
-
           $O_auteurMapper = FabriqueDeMappers::fabriquer('auteur', Connexion::recupererInstance());
           $O_auteurMapper->actualiser($O_auteur);
-        }
 
-        // on redirige vers la liste !
-        BoiteAOutils::redirigerVers('auteur/liste');
+          // on redirige vers la liste !
+          BoiteAOutils::redirigerVers('auteur/liste');
+        }
+        else
+        {
+          Vue::montrer('auteur/edit', array(
+                       'auteur' => $O_auteur,
+                       'validateur' => $O_validateur
+                       ));
+        }
       }
       else
       {
@@ -204,32 +195,29 @@ final class ControleurAuteur
       if (BoiteAOutils::donneMethodeRequete() === 'POST')
       {
         // on créer la catégorie en bdd
-        $S_nom = trim($_POST['nom']);
-        $S_prenom = trim($_POST['prenom']);
-        $S_mail = trim($_POST['mail']);
+        $A_params = array();
+        $A_params['nom'] = $_POST['nom'];
+        $A_params['prenom'] = $_POST['prenom'];
+        $A_params['mail'] = $_POST['mail'];
 
         $O_auteur = new Auteur();
-        $O_auteur->changeNom($S_nom);
-        $O_auteur->changePrenom($S_prenom);
-        $O_auteur->changeMail($S_mail);
 
-        $O_validateur = new ValidateurAuteur($O_auteur);
+        $O_validateur = new ValidateurAuteur($O_auteur, $A_params);
 
-        if (!$O_validateur->estValide())
+        if ($O_validateur->estValide())
+        {
+          $O_auteurMapper = FabriqueDeMappers::fabriquer('auteur', Connexion::recupererInstance());
+          $O_auteurMapper->creer($O_auteur);
+
+          // on redirige vers la liste !
+          BoiteAOutils::redirigerVers('auteur/liste');
+        }
+        else
         {
           Vue::montrer('auteur/creer', array(
-                       'auteur' => $O_auteur,
                        'validateur' => $O_validateur
-          ));
-
-          return;
+                       ));
         }
-
-        $O_auteurMapper = FabriqueDeMappers::fabriquer('auteur', Connexion::recupererInstance());
-        $O_auteurMapper->creer($O_auteur);
-
-        // on redirige vers la liste !
-        BoiteAOutils::redirigerVers('auteur/liste');
       }
       else
       {

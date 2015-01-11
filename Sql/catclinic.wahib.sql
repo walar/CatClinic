@@ -21,7 +21,7 @@ create table if not exists categorie (
 create table if not exists article (
   id smallint unsigned not null auto_increment,
   titre varchar(30) not null,
-  contenu text not null,
+  contenu text,
   en_ligne tinyint unsigned not null default 0,
   creation_ts timestamp not null default current_timestamp,
 

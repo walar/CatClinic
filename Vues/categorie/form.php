@@ -2,23 +2,29 @@
 /*
   utilisé pour afficher le formulaire de création ou d'édition d'une catégorie
 */
-if (isset($A_vue['categorie']))
-{
-  $O_categorie = $A_vue['categorie'];
-}
+
+$S_titre = '';
 
 if (isset($A_vue['validateur']))
 {
   $O_validateur = $A_vue['validateur'];
+
+  $S_titre = $O_validateur->donneParam('titre');
+}
+else if (isset($A_vue['categorie']))
+{
+  $O_categorie = $A_vue['categorie'];
+
+  $S_titre = $O_categorie->donneTitre();
 }
 
 ?>
 
 <p>
   <?php
-    $S_titre = isset($O_categorie)?$O_categorie->donneTitre():'';
     $B_erreur = isset($O_validateur) && !$O_validateur->estValide('titre');
   ?>
+
   <label for="titre" title="Veuillez saisir un titre" class="<?php echo $B_erreur?'error':''; ?>">Catégorie
   <input type="text" name="titre" id="titre"
           title="Veuillez saisir un titre"

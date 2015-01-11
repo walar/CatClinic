@@ -2,21 +2,32 @@
 /*
   utilisé pour afficher le formulaire de création ou d'édition d'une catégorie
 */
-if (isset($A_vue['auteur']))
-{
-  $O_auteur = $A_vue['auteur'];
-}
+
+$S_nom = '';
+$S_prenom = '';
+$S_mail = '';
 
 if (isset($A_vue['validateur']))
 {
   $O_validateur = $A_vue['validateur'];
+
+  $S_nom = $O_validateur->donneParam('nom');
+  $S_prenom = $O_validateur->donneParam('prenom');
+  $S_mail = $O_validateur->donneParam('mail');
+}
+else if (isset($A_vue['auteur']))
+{
+  $O_auteur = $A_vue['auteur'];
+
+  $S_nom = $O_auteur->donneNom();
+  $S_prenom = $O_auteur->donnePrenom();
+  $S_mail = $O_auteur->donneMail();
 }
 
 ?>
 
 <p>
   <?php
-    $S_nom = isset($O_auteur)?$O_auteur->donneNom():'';
     $B_erreur = isset($O_validateur) && !$O_validateur->estValide('nom');
   ?>
   <label for="nom" title="Veuillez saisir un nom" class="<?php echo $B_erreur?'error':''; ?>">Nom
@@ -34,7 +45,6 @@ if (isset($A_vue['validateur']))
 
 <p>
   <?php
-    $S_prenom = isset($O_auteur)?$O_auteur->donnePrenom():'';
     $B_erreur = isset($O_validateur) && !$O_validateur->estValide('prenom');
   ?>
   <label for="prenom" title="Veuillez saisir un prenom" class="<?php echo $B_erreur?'error':''; ?>">Prenom
@@ -52,7 +62,6 @@ if (isset($A_vue['validateur']))
 
 <p>
   <?php
-    $S_mail = isset($O_auteur)?$O_auteur->donneMail():'';
     $B_erreur = isset($O_validateur) && !$O_validateur->estValide('mail');
   ?>
   <label for="mail" title="Veuillez saisir un mail" class="<?php echo $B_erreur?'error':''; ?>">Mail
