@@ -1,0 +1,21 @@
+// Allows the use of rem-calc() or lower-bound()
+@import "foundation/functions";
+
+//foundation-icons path
+$fi-path: "../vendor/foundation-icon-fonts";
+
+
+// Set the link colors and styles for top-level nav
+//$topbar-link-color-hover: darken(white, 25%);
+//$topbar-link-color-active:  darken(white, 35%);
+$topbar-link-bg-hover:      lighten(#333, 5%);
+
+
+$footer-height:               rem-calc(45);
+$footer-margin-top:           rem-calc(20);
+$footer-color:                #fff;
+$footer-bg:                   #555;
+$footer-link-color-active:    darken($footer-color, 35%);
+$footer-link-bg-hover:        darken($footer-bg, 5%);
+
+

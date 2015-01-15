@@ -6,6 +6,6 @@
   </div>
 
   <div id="piedForm">
-    <input type="submit" name="valid" id="valid" value="Créer" title="Cliquez sur ce bouton pour creer l'article" />
+    <input type="submit" name="valid" id="valid" value="Créer" title="Cliquez sur ce bouton pour creer l'article" class="button radius" />
   </div>
 </form>

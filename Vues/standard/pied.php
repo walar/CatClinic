@@ -1,2 +1,5 @@
-<a href="http://www.catclinic.com">Cat Clinic en ligne</a> 
-| <a href="mailto:cnam@catclinic.com">Contactez notre webmestre</a>
+<ul>
+  <li><a href="#">Contact</a></li>
+  <li><a href="#">Mentions légales</a></li>
+  <li><a href="#top">Haut de page</a></li>
+</ul>

@@ -106,24 +106,8 @@
 
 <?php endif; ?>
 
-<?php if (isset($A_vue['pagination'])): ?>
-  <div>
-    <?php foreach ($A_vue['pagination'] as $I_numeroPage => $S_lien): ?>
-      &nbsp;
-      <?php if (isset($S_lien)): ?>
-        <?php
-          if ($B_estTrie)
-          {
-            $S_lien .= '/' . $S_tri;
-          }
-        ?>
-        <a href="/<?php echo $S_lien; ?>"><?php echo $I_numeroPage; ?></a>
-      <?php else: ?>
-        <?php echo $I_numeroPage; ?>
-      <?php endif; ?>
-    <?php endforeach; ?>
-  </div>
-<?php endif; ?>
+
+<?php include Constantes::repertoireVues() . '/standard/pagination.php'; ?>
 
 
 <div>

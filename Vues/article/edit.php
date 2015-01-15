@@ -14,7 +14,7 @@
   </div>
 
   <div id="piedForm">
-    <input type="submit" name="valid" id="valid" value="Mettre à jour" title="Cliquez sur ce bouton pour modifier l'article" />
+    <input type="submit" name="valid" id="valid" value="Mettre à jour" title="Cliquez sur ce bouton pour modifier l'article" class="button radius" />
   </div>
 
 </form>

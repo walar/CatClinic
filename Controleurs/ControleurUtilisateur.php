@@ -4,6 +4,11 @@
 
 final class ControleurUtilisateur
 {
+    public function defautAction()
+    {
+        BoiteAOutils::redirigerVers('utilisateur/liste');
+    }
+
     public function listeAction()
     {
         $this->paginerAction();

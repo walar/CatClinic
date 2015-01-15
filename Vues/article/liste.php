@@ -9,7 +9,7 @@
 
 <h1>Liste des articles</h1>
 
-<a href="/article/creer">Créer un nouveau article</a>
+<a href="/article/creer" class="button radius">Créer un nouvel article</a>
 
 <?php if (count($A_vue['articles'])): ?>
 
@@ -18,90 +18,90 @@
       <tr>
         <td>Catégorie
           <?php if (!$B_estTrie || ($B_estTrie && $A_paramTri[1] == 'categorie' && $A_paramTri[2] == 'asc')): ?>
-            &uarr;
+            <span class="fi-arrow-up"></span>
           <?php else: ?>
             <a href="/article/paginer/1" title="Tri par ordre croissant">
-              &uarr;
+              <span class="fi-arrow-up"></span>
             </a>
           <?php endif; ?>
 
           <?php if ($B_estTrie && $A_paramTri[1] == 'categorie' && $A_paramTri[2] == 'desc'): ?>
-            &darr;
+            <span class="fi-arrow-down"></span>
           <?php else: ?>
             <a href="/article/paginer/1/tri-categorie-desc" title="Tri par ordre décroissant">
-              &darr;
+              <span class="fi-arrow-down"></span>
             </a>
           <?php endif; ?>
         </td>
 
         <td>Titre
           <?php if ($B_estTrie && $A_paramTri[1] == 'titre' && $A_paramTri[2] == 'asc'): ?>
-            &uarr;
+            <span class="fi-arrow-up"></span>
           <?php else: ?>
             <a href="/article/paginer/1/tri-titre" title="Tri par ordre croissant">
-              &uarr;
+              <span class="fi-arrow-up"></span>
             </a>
           <?php endif; ?>
 
           <?php if ($B_estTrie && $A_paramTri[1] == 'titre' && $A_paramTri[2] == 'desc'): ?>
-            &darr;
+            <span class="fi-arrow-down"></span>
           <?php else: ?>
             <a href="/article/paginer/1/tri-titre-desc" title="Tri par ordre décroissant">
-              &darr;
+              <span class="fi-arrow-down"></span>
             </a>
           <?php endif; ?>
         </td>
 
         <td>Auteur
           <?php if ($B_estTrie && $A_paramTri[1] == 'auteur' && $A_paramTri[2] == 'asc'): ?>
-            &uarr;
+            <span class="fi-arrow-up"></span>
           <?php else: ?>
             <a href="/article/paginer/1/tri-auteur" title="Tri par ordre croissant">
-              &uarr;
+              <span class="fi-arrow-up"></span>
             </a>
           <?php endif; ?>
 
           <?php if ($B_estTrie && $A_paramTri[1] == 'auteur' && $A_paramTri[2] == 'desc'): ?>
-            &darr;
+            <span class="fi-arrow-down"></span>
           <?php else: ?>
             <a href="/article/paginer/1/tri-auteur-desc" title="Tri par ordre décroissant">
-              &darr;
+              <span class="fi-arrow-down"></span>
             </a>
           <?php endif; ?>
         </td>
 
         <td>Date
           <?php if ($B_estTrie && $A_paramTri[1] == 'date' && $A_paramTri[2] == 'asc'): ?>
-            &uarr;
+            <span class="fi-arrow-up"></span>
           <?php else: ?>
             <a href="/article/paginer/1/tri-date" title="Tri par ordre croissant">
-              &uarr;
+              <span class="fi-arrow-up"></span>
             </a>
           <?php endif; ?>
 
           <?php if ($B_estTrie && $A_paramTri[1] == 'date' && $A_paramTri[2] == 'desc'): ?>
-            &darr;
+            <span class="fi-arrow-down"></span>
           <?php else: ?>
             <a href="/article/paginer/1/tri-date-desc" title="Tri par ordre décroissant">
-              &darr;
+              <span class="fi-arrow-down"></span>
             </a>
           <?php endif; ?>
         </td>
 
         <td>En ligne
           <?php if ($B_estTrie && $A_paramTri[1] == 'enligne' && $A_paramTri[2] == 'asc'): ?>
-            &uarr;
+            <span class="fi-arrow-up"></span>
           <?php else: ?>
             <a href="/article/paginer/1/tri-enligne" title="Tri par ordre croissant">
-              &uarr;
+              <span class="fi-arrow-up"></span>
             </a>
           <?php endif; ?>
 
           <?php if ($B_estTrie && $A_paramTri[1] == 'enligne' && $A_paramTri[2] == 'desc'): ?>
-            &darr;
+            <span class="fi-arrow-down"></span>
           <?php else: ?>
             <a href="/article/paginer/1/tri-enligne-desc" title="Tri par ordre décroissant">
-              &darr;
+              <span class="fi-arrow-down"></span>
             </a>
           <?php endif; ?>
         </td>
@@ -130,17 +130,27 @@
           </td>
 
           <td>
-            <?php echo $O_article->estEnLigne() ? 'Oui' : 'Non'; ?>
+            <?php if ($O_article->estEnLigne()): ?>
+              <input type="checkbox" checked />
+            <?php else: ?>
+              <input type="checkbox" />
+            <?php endif; ?>
           </td>
 
           <td>
-            <a href="/article/edit/<?php echo $O_article->donneIdentifiant(); ?>">
-              Modifier
-            </a>
-            &nbsp;
-            <a href="/article/suppr/<?php echo $O_article->donneIdentifiant(); ?>">
-              Effacer
-            </a>
+            <ul class='inline-list'>
+              <li>
+                <a href="/article/edit/<?php echo $O_article->donneIdentifiant(); ?>">
+                  <span class='fi-pencil' title='Modifier'></span>
+                </a>
+              </li>
+
+              <li>
+                <a href="/article/suppr/<?php echo $O_article->donneIdentifiant(); ?>">
+                  <span class='fi-trash' title='Effacer'></span>
+                </a>
+              </li>
+            </ul>
           </td>
         </tr>
       <?php endforeach; ?>
@@ -153,29 +163,17 @@
 
 <?php endif; ?>
 
-<?php if (isset($A_vue['pagination'])): ?>
-  <div>
-    <?php foreach ($A_vue['pagination'] as $I_numeroPage => $S_lien): ?>
-      &nbsp;
-      <?php if (isset($S_lien)): ?>
-        <?php
-          if ($B_estTrie)
-          {
-            $S_lien .= '/' . $S_tri;
-          }
-        ?>
-        <a href="/<?php echo $S_lien; ?>"><?php echo $I_numeroPage; ?></a>
-      <?php else: ?>
-        <?php echo $I_numeroPage; ?>
-      <?php endif; ?>
-    <?php endforeach; ?>
+
+<?php include Constantes::repertoireVues() . '/standard/pagination.php'; ?>
+
+
+<form id="entite_par_page" action="/article/liste" method="post" class="row collapse">
+
+  <div class="small-6 medium-offset-8 medium-2 columns">
+    <label  for="nb_article_par_page" class="prefix">Articles par page: </label>
   </div>
-<?php endif; ?>
 
-
-<div>
-  <form id="entite_par_page" action="/article/liste" method="post">
-    <label  for="nb_article_par_page">Articles par page: </label>
+  <div class="small-3 medium-1 columns">
     <select id ="nb_article_par_page" name="nb_article_par_page">
       <?php foreach ($A_entiteParPage as $I_entiteParPage): ?>
         <option value="<?php echo $I_entiteParPage ?>"
@@ -185,7 +183,10 @@
         ><?php echo $I_entiteParPage ?></option>
       <?php endforeach; ?>
     </select>
+  </div>
 
-    <input type="submit" name="Go" value="Go" />
-  </form>
-</div>
+  <div class="small-3 medium-1 columns">
+    <input type="submit" name="Go" value="Go" class="button postfix"/>
+  </div>
+
+</form>

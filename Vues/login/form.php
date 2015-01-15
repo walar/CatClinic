@@ -1,9 +1,6 @@
 <div id="loginbox">
     <h1>Cat Clinic - Console</h1>
     <?php
-        // si une erreur s'est produite à la soumission du formulaire, elle remonte ici
-        Vue::montrer('standard/erreurs');
-
         // l'authentification de l'utilisateur a pu échouer et néanmoins positionner l'identifiant de l'utilisateur
         // il ira dans l'attribut "value" de notre zone de texte
         $S_identifiant = BoiteAOutils::recupererDepuisSession('login');

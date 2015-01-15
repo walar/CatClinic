@@ -1,0 +1,108 @@
+/* ------------------------------
+ *  =    Sommaire
+ * ------------------------------ */
+/*
+ * 1- Infos
+ * 2- General
+ * 3- Header
+ * 4- Main
+ * 5- Footer
+ */
+
+
+ /* ------------------------------------------------------------
+  *    =    Infos
+  * ------------------------------------------------------------ */
+/*
+  TODO:
+*/
+
+
+/* ------------------------------------------------------------
+ *    =    2- General
+ * ------------------------------------------------------------ */
+// si javascript n'est pas activé, on force l'affichage de la topbar et on cache le button "menu"
+.no-js .top-bar
+{
+  height: auto;
+
+  .toggle-topbar
+  {
+    display: none;
+  }
+}
+
+
+/* ------------------------------------------------------------
+ *    =    3- Header
+ * ------------------------------------------------------------ */
+// HEADER
+body > header
+{
+
+}
+
+
+/* ------------------------------------------------------------
+ *    =    4- Main
+ * ------------------------------------------------------------ */
+body > main
+{
+
+}
+
+
+/* ------------------------------------------------------------
+ *    =    5- Footer
+ * ------------------------------------------------------------ */
+body > footer
+{
+  margin-top: $footer-margin-top;
+  line-height:$footer-height;
+  background: $footer-bg;
+  color: $footer-color;
+
+  ul
+  {
+    text-align: center;
+    text-indent: 0;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    a
+    {
+      display: block;
+      padding: 12px;
+      font-size: rem-calc(13);
+      text-transform: none;
+      color: $footer-color;
+
+      &:hover, &:focus
+      {
+        color: $footer-color;
+        background: $footer-link-bg-hover;
+      }
+
+      &.active
+      {
+        color: $footer-link-color-active;
+      }
+    }
+  }
+
+  @media #{$medium-up}
+  {
+    height: $footer-height;
+
+    li
+    {
+      display: inline;
+
+      a
+      {
+        display: inline-block;
+      }
+    }
+  }
+}
