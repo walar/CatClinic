@@ -200,7 +200,7 @@ final class ArticleMapper extends SqlDataMapper
       $S_titre = $O_article->donneTitre();
       $S_contenu = $O_article->donneContenu();
       $I_enligne = $O_article->estEnLigne() ? 1 : 0;
-      $S_dateCreation = $O_article->donneDateCreationFormatee();
+      $S_dateCreation = $O_article->donneDateCreationFormatee(false);
       $I_categorie = $O_article->donneCategorie()->donneIdentifiant();
       $I_auteur = $O_article->donneAuteur()->donneIdentifiant();
 

@@ -74,9 +74,11 @@ final class Article
     return $this->_O_dateCreation;
   }
 
-  public function donneDateCreationFormatee ()
+  public function donneDateCreationFormatee ($B_simple = true)
   {
-    return $this->_O_dateCreation ? $this->_O_dateCreation->format(Constantes::DATE_FORMAT_SIMPLE) : null;
+    $S_format = $B_simple ? Constantes::DATE_FORMAT_SIMPLE : Constantes::DATE_FORMAT;
+
+    return $this->_O_dateCreation ? $this->_O_dateCreation->format($S_format) : null;
   }
 
   public function donneCategorie ()
