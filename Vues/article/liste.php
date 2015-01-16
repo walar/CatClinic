@@ -131,9 +131,9 @@
 
           <td>
             <?php if ($O_article->estEnLigne()): ?>
-              <input type="checkbox" checked />
+              Oui
             <?php else: ?>
-              <input type="checkbox" />
+              Non
             <?php endif; ?>
           </td>
 
@@ -141,13 +141,13 @@
             <ul class='inline-list'>
               <li>
                 <a href="/article/edit/<?php echo $O_article->donneIdentifiant(); ?>">
-                  <span class='fi-pencil' title='Modifier'></span>
+                  <span class='fi-pencil'></span> Modifier
                 </a>
               </li>
 
               <li>
                 <a href="/article/suppr/<?php echo $O_article->donneIdentifiant(); ?>">
-                  <span class='fi-trash' title='Effacer'></span>
+                  <span class='fi-trash'></span> Effacer
                 </a>
               </li>
             </ul>

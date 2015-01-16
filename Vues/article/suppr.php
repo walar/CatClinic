@@ -2,6 +2,7 @@
     $O_article = $A_vue['article'];
 ?>
 <h1>Supprimer l'article "<?php echo $O_article->donneTitre(); ?>"</h1>
+
 <form name="article"
       id="article"
       method="post"
@@ -14,8 +15,8 @@
     </div>
 
     <div id="piedForm">
-        <a href="/article/liste">Retour</a>
+        <a href="/article/liste" class="button secondary radius">Retour</a>
 
-        <input type="submit" name="Supprimer" id="supprimer" value="Supprimer" title="Cliquez sur ce bouton pour supprimer l'article" />
+        <input type="submit" name="Supprimer" id="supprimer" value="Supprimer" title="Cliquez sur ce bouton pour supprimer l'article" class="button alert radius right"/>
     </div>
 </form>

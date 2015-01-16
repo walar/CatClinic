@@ -36,10 +36,10 @@ $S_ressourcePath = "/Ressources/Public";
     <?php Vue::montrer('standard/pied'); ?>
   </footer>
 
-  <script src="<?php echo $S_ressourcePath; ?>/vendor/jquery/dist/jquery.min.js"></script>
-  <script src="<?php echo $S_ressourcePath; ?>/vendor/foundation/js/foundation.js"></script>
-  <script src="<?php echo $S_ressourcePath; ?>/vendor/foundation/js/foundation-topbar.js"></script>
-  <script src="<?php echo $S_ressourcePath; ?>/js/app.js"></script>
+  <script type="text/javascript" src="<?php echo $S_ressourcePath; ?>/vendor/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="<?php echo $S_ressourcePath; ?>/vendor/tinymce/tinymce.js"></script>
+  <script type="text/javascript" src="<?php echo $S_ressourcePath; ?>/vendor/foundation/js/foundation.js"></script>
+  <script type="text/javascript" src="<?php echo $S_ressourcePath; ?>/js/app.js"></script>
 </body>
 
 </html>

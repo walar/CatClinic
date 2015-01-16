@@ -1,9 +1,9 @@
 <?php
-  $S_REQUEST_URI = $_SERVER['REQUEST_URI'] . '/';
+  $S_REQUEST_URI = $_SERVER['REQUEST_URI'];
 
   if (Authentification::estConnecte())
   {
-    $A_liens = array('/test/' => 'Test');
+    $A_liens = array('/' => 'Accueil');
 
     if (Authentification::estAdministrateur())
     {
@@ -11,6 +11,10 @@
       $A_liens['/article/'] = 'Articles';
       $A_liens['/auteur/'] = 'Auteurs';
       $A_liens['/categorie/'] = 'Catégories';
+    }
+    else if (BoiteAOutils::recupererDepuisSession('utilisateur')->estProprietaire())
+    {
+      $A_liens['/visites/'] = 'Mes chats';
     }
   }
 ?>
@@ -40,7 +44,7 @@
     <?php if (isset($A_liens)): ?>
       <ul class="left">
         <?php foreach ($A_liens as $S_lien => $S_titre): ?>
-          <?php if (stripos($S_REQUEST_URI, $S_lien) !== false): ?>
+          <?php if ($S_REQUEST_URI == $S_lien || (strlen($S_lien) > 1 && stripos($S_REQUEST_URI, $S_lien) !== false)): ?>
             <li class="active">
           <?php else: ?>
             <li>

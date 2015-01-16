@@ -21,6 +21,11 @@
 /* ------------------------------------------------------------
  *    =    2- General
  * ------------------------------------------------------------ */
+table
+{
+  width: 100%;
+}
+
 // si javascript n'est pas activé, on force l'affichage de la topbar et on cache le button "menu"
 .no-js .top-bar
 {

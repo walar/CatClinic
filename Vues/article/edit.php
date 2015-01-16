@@ -9,12 +9,8 @@
 
   <input type="hidden" name="_method" value="PUT" />
 
-  <div id="corpForm">
-    <?php include 'form.php'; ?>
-  </div>
+  <?php include 'form.php'; ?>
 
-  <div id="piedForm">
-    <input type="submit" name="valid" id="valid" value="Mettre à jour" title="Cliquez sur ce bouton pour modifier l'article" class="button radius" />
-  </div>
+  <input type="submit" name="valid" id="valid" value="Mettre à jour" title="Cliquez sur ce bouton pour modifier l'article" class="button radius" />
 
 </form>

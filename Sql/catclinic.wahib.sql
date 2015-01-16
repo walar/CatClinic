@@ -2,9 +2,9 @@ use catclinic;
 
 create table if not exists auteur (
   id smallint unsigned not null auto_increment,
-  nom varchar(30) not null,
-  prenom varchar(30) not null,
-  mail varchar(100) not null,
+  nom varchar(64) not null,
+  prenom varchar(64) not null,
+  mail varchar(128) not null,
 
   primary key(id),
   unique(mail)
@@ -20,7 +20,7 @@ create table if not exists categorie (
 
 create table if not exists article (
   id smallint unsigned not null auto_increment,
-  titre varchar(30) not null,
+  titre varchar(255) not null,
   contenu text,
   en_ligne tinyint unsigned not null default 0,
   creation_ts timestamp not null default current_timestamp,
