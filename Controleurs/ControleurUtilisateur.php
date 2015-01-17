@@ -62,7 +62,7 @@ final class ControleurUtilisateur
         $O_utilisateur = $O_utilisateurMapper->trouverParIdentifiant($I_identifiantUtilisateur);
         $O_utilisateurMapper->supprimer($O_utilisateur);
 
-        $O_listeur = new ListeurUtilisateur($O_utilisateurMapper);
+        $O_listeur = new Listeur($O_utilisateurMapper);
         $O_paginateur = new Paginateur($O_listeur);
         $O_paginateur->changeLimite(Constantes::NB_MAX_UTILISATEURS_PAR_PAGE);
 
@@ -98,7 +98,7 @@ final class ControleurUtilisateur
         $I_page = isset($A_parametres[0]) ? $A_parametres[0] : 1;
         $O_utilisateurMapper = FabriqueDeMappers::fabriquer('utilisateur', Connexion::recupererInstance());
 
-        $O_listeur = new ListeurUtilisateur($O_utilisateurMapper);
+        $O_listeur = new Listeur($O_utilisateurMapper);
         $O_paginateur = new Paginateur($O_listeur);
         $O_paginateur->changeLimite(Constantes::NB_MAX_UTILISATEURS_PAR_PAGE);
 
