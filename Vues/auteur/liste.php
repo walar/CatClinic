@@ -9,7 +9,7 @@
 
 <h1>Liste des auteurs</h1>
 
-<a href="/auteur/creer">Créer un nouveau auteur</a>
+<a href="/auteur/creer">Créer un nouvel auteur</a>
 
 <?php if (count($A_vue['auteurs'])): ?>
 

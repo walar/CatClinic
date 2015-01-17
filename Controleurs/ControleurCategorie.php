@@ -175,6 +175,8 @@ final class ControleurCategorie
         }
         else
         {
+          BoiteAOutils::stockerErreur("Une erreur s'est produite lors de la validation des données.");
+
           Vue::montrer('categorie/edit', array(
                        'categorie' => $O_categorie,
                        'validateur' => $O_validateur
@@ -210,6 +212,8 @@ final class ControleurCategorie
         }
         else
         {
+          BoiteAOutils::stockerErreur("Une erreur s'est produite lors de la validation des données.");
+
           Vue::montrer('categorie/creer', array(
                        'validateur' => $O_validateur
                        ));

@@ -3,7 +3,7 @@ $S_erreur = BoiteAOutils::recupererDepuisSession('erreur', false); // on veut la
 ?>
 
 <?php if (isset($S_erreur)): ?>
-  <div data-alert class="alert-box alert">
+  <div data-alert class="alert-box alert radius">
     <?php echo $S_erreur; ?>
     <a href="#" class="close">&times;</a>
   </div>

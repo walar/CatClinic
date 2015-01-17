@@ -81,7 +81,7 @@ class UtilisateurMapper extends SqlDataMapper
         {
             // on sait donc qu'on aura 1 seul enregistrement dans notre tableau, car login est unique
             $O_utilisateurTemporaire = $A_utilisateur[0];
- 
+
             if (class_exists($this->_S_classeMappee)) {
                 $O_utilisateur = new $this->_S_classeMappee;
                 $O_utilisateur->changeIdentifiant($O_utilisateurTemporaire->id);
@@ -121,7 +121,7 @@ class UtilisateurMapper extends SqlDataMapper
         {
             if (!$O_utilisateur->donneLogin())
             {
-                throw new Exception ("Impossible de lettre à jour l'utilisateur, des informations sont manquantes");
+                throw new Exception ("Impossible de mettre à jour l'utilisateur, des informations sont manquantes");
             }
 
             $S_login = $O_utilisateur->donneLogin();

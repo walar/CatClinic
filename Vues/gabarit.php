@@ -3,7 +3,6 @@
 <?php
 $S_ressourcePath = "/Ressources/Public";
 ?>
-
 <!--
   Grâce à modernizr, la classe "no-js" nous permet de détecter si javascript est activé
 -->
@@ -29,7 +28,9 @@ $S_ressourcePath = "/Ressources/Public";
   <main class="row">
     <?php Vue::montrer('standard/erreurs'); ?>
 
-    <?php echo $A_vue['body'] ?>
+    <div class="small-12 columns">
+      <?php echo $A_vue['body']; ?>
+    </div>
   </main>
 
   <footer>

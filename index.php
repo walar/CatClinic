@@ -8,7 +8,7 @@ require 'Noyau/ChargementAuto.php';
 BoiteAOutils::demarrerSession();
 
 // Notre fichier htaccess reecrit l'URL pour nous, ctrler contient le controlleur
-$S_urlADecortiquer = isset($_GET['url']) ? $_GET['url'] : null; 
+$S_urlADecortiquer = isset($_GET['url']) ? $_GET['url'] : null;
 
 Vue::ouvrirTampon(); // on ouvre le tampon d'affichage, les contrôleurs qui appellent des vues les mettront dedans
 

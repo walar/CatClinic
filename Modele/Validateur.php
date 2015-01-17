@@ -37,7 +37,7 @@ abstract class Validateur
     return $B_estValide;
   }
 
-  protected function verifierString($S_nom, $I_tailleMin=3)
+  protected function verifierString($S_nom, $I_tailleMin=2)
   {
     $B_estValide = true;
     $S_erreurs = "";
