@@ -15,7 +15,7 @@ insert into proprietaire_chat values (1,1), (1,2), (2,3);
 
 -- le premier utilisateur a comme login invite et comme mot de passe 123cat5
 -- admincat aura le même mot de passe
-insert into utilisateur(login, motdepasse, id_proprietaire) values ('invite', SHA1('inviteinvite123cat5'), 1);
+insert into utilisateur(login, motdepasse, id_proprietaire) values ('invite', SHA1('invite123cat5'), 1);
 insert into utilisateur(login, motdepasse, admin) values ('admincat', SHA1('admincat123cat5'), 1);
 
 insert into visite(id_praticien, id_chat, date, prix, observations) values (1,1,current_timestamp(), 79.90, 'Opération bien déroulée');

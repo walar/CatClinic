@@ -13,6 +13,15 @@ abstract class ListeurTriable extends Listeur
     $this->_S_ordreTri = 'asc';
   }
 
+  abstract public function estUnAttributDeTri($S_attribut);
+
+  public function lister ($I_debut = null, $I_fin = null)
+  {
+    return $this->_O_mapper->trouverParIntervalle($I_debut, $I_fin,
+                                                  $this->donneAttributTri(),
+                                                  $this->donneOrdreTri());
+  }
+
   // getters
   public function donneAttributTri()
   {
@@ -23,8 +32,6 @@ abstract class ListeurTriable extends Listeur
   {
     return $this->_S_ordreTri;
   }
-
-  abstract public function estUnAttributDeTri($S_attribut);
 
     // setters
   public function changeAttributTri($S_attribut)
