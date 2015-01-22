@@ -34,7 +34,7 @@ final class ControleurDefaut
                 // un admin doit avoir la liste des utilisateurs du site
                 // je les récupère tous...
                 $O_utilisateurMapper = FabriqueDeMappers::fabriquer('utilisateur', Connexion::recupererInstance());
-                $O_listeurUtilisateur = new ListeurUtilisateur($O_utilisateurMapper);
+                $O_listeurUtilisateur = new Listeur($O_utilisateurMapper);
 
                 $O_paginateur = new Paginateur($O_listeurUtilisateur);
 
