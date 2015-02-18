@@ -1,5 +1,5 @@
 <?php
-$S_erreur = BoiteAOutils::recupererDepuisSession('erreur', false); // on veut la détruire après affichage, d'où le false
+$S_erreur = BoiteAOutils::recupererDepuisSession('erreur', true); // on veut la détruire après affichage, d'où le true
 ?>
 
 <?php if (isset($S_erreur)): ?>

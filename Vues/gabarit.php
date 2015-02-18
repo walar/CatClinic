@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 
-<?php
-$S_ressourcePath = "/Ressources/Public";
-?>
 <!--
   Grâce à modernizr, la classe "no-js" nous permet de détecter si javascript est activé
 -->
@@ -15,9 +12,9 @@ $S_ressourcePath = "/Ressources/Public";
 
   <title>Cat Clinic - Console de gestion</title>
 
-  <link rel="stylesheet" type="text/css" href="<?php echo $S_ressourcePath; ?>/css/app.css" />
+  <link rel="stylesheet" type="text/css" href="/Ressources/Public/css/app.css" />
 
-  <script src="<?php echo $S_ressourcePath; ?>/vendor/modernizr/modernizr.js"></script>
+  <script src="/Ressources/Public/vendor/modernizr/modernizr.js"></script>
 </head>
 
 <body id="top">
@@ -37,10 +34,10 @@ $S_ressourcePath = "/Ressources/Public";
     <?php Vue::montrer('standard/pied'); ?>
   </footer>
 
-  <script type="text/javascript" src="<?php echo $S_ressourcePath; ?>/vendor/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="<?php echo $S_ressourcePath; ?>/vendor/tinymce/tinymce.js"></script>
-  <script type="text/javascript" src="<?php echo $S_ressourcePath; ?>/vendor/foundation/js/foundation.js"></script>
-  <script type="text/javascript" src="<?php echo $S_ressourcePath; ?>/js/app.js"></script>
+  <script type="text/javascript" src="/Ressources/Public/vendor/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/Ressources/Public/vendor/tinymce/tinymce.js"></script>
+  <script type="text/javascript" src="/Ressources/Public/vendor/foundation/js/foundation.js"></script>
+  <script type="text/javascript" src="/Ressources/Public/js/app.js"></script>
 </body>
 
 </html>

@@ -4,6 +4,9 @@
 //foundation-icons path
 $fi-path: "../vendor/foundation-icon-fonts";
 
+$topbar-breakpoint: 64.063em;
+$topbar-media-query: "only screen and (min-width:64.063em)";
+
 
 // Set the link colors and styles for top-level nav
 //$topbar-link-color-hover: darken(white, 25%);

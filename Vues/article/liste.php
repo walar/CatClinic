@@ -16,7 +16,7 @@
   <table>
     <thead>
       <tr>
-        <td>Catégorie
+        <td class="hide-for-small-only">Catégorie
           <?php if (!$B_estTrie || ($B_estTrie && $A_paramTri[1] == 'categorie' && $A_paramTri[2] == 'asc')): ?>
             <span class="fi-arrow-up"></span>
           <?php else: ?>
@@ -52,7 +52,7 @@
           <?php endif; ?>
         </td>
 
-        <td>Auteur
+        <td class="hide-for-small-only">Auteur
           <?php if ($B_estTrie && $A_paramTri[1] == 'auteur' && $A_paramTri[2] == 'asc'): ?>
             <span class="fi-arrow-up"></span>
           <?php else: ?>
@@ -70,7 +70,7 @@
           <?php endif; ?>
         </td>
 
-        <td>Date
+        <td class="hide-for-small-only">Date
           <?php if ($B_estTrie && $A_paramTri[1] == 'date' && $A_paramTri[2] == 'asc'): ?>
             <span class="fi-arrow-up"></span>
           <?php else: ?>
@@ -88,7 +88,7 @@
           <?php endif; ?>
         </td>
 
-        <td>En ligne
+        <td class="hide-for-small-only">En ligne
           <?php if ($B_estTrie && $A_paramTri[1] == 'enligne' && $A_paramTri[2] == 'asc'): ?>
             <span class="fi-arrow-up"></span>
           <?php else: ?>
@@ -113,7 +113,7 @@
     <tbody>
       <?php foreach ($A_vue['articles'] as $O_article): ?>
         <tr>
-          <td>
+          <td class="hide-for-small-only">
             <?php echo $O_article->donneCategorie()->donneTitre(); ?>
           </td>
 
@@ -121,15 +121,15 @@
             <?php echo $O_article->donneTitre(); ?>
           </td>
 
-          <td>
+          <td class="hide-for-small-only">
             <?php echo $O_article->donneAuteur()->donneNomComplet(); ?>
           </td>
 
-          <td>
+          <td class="hide-for-small-only">
             <?php echo $O_article->donneDateCreationFormatee(); ?>
           </td>
 
-          <td>
+          <td class="hide-for-small-only">
             <?php if ($O_article->estEnLigne()): ?>
               Oui
             <?php else: ?>

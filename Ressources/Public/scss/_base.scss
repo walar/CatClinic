@@ -21,9 +21,22 @@
 /* ------------------------------------------------------------
  *    =    2- General
  * ------------------------------------------------------------ */
-table
+h1
+{
+  text-align: center;
+}
+
+// on change la couleur d'arrière-plan de la ligne 
+//    du tableau qui est survolé par la souris pour améliorer la visibilité 
+
+table 
 {
   width: 100%;
+}
+
+tbody tr:hover 
+{
+  background: $smoke;
 }
 
 // si javascript n'est pas activé, on force l'affichage de la topbar et on cache le button "menu"

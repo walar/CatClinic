@@ -19,21 +19,19 @@ final class ControleurDefaut
                 // un proprietaire doit voir les visites de son chat s'afficher
                 if ($O_utilisateur->estProprietaire())
                 {
-                    $O_chat = $O_utilisateur->donneProprietaire()->donneChat();
-                    $I_identifiantChat = $O_chat->donneIdentifiant();
-
-                    $O_visiteMapper = FabriqueDeMappers::fabriquer('visite', Connexion::recupererInstance());
-                    $A_visites = $O_visiteMapper->trouverParIdentifiantChat ($I_identifiantChat);
-
-                    Vue::montrer('visites/liste', array('visites' => $A_visites, 'chat' => $O_chat));
-                } else
+                    BoiteAOutils::redirigerVers('proprietaire/visites');
+                } 
+                else
                 {
                     Vue::montrer('client/accueil');
                 }
-            } else {
+            } 
+            else 
+            {
                 // un admin doit avoir la liste des utilisateurs du site
                 // je les récupère tous...
-                $O_utilisateurMapper = FabriqueDeMappers::fabriquer('utilisateur', Connexion::recupererInstance());
+                
+                /* $O_utilisateurMapper = FabriqueDeMappers::fabriquer('utilisateur', Connexion::recupererInstance());
                 $O_listeurUtilisateur = new Listeur($O_utilisateurMapper);
 
                 $O_paginateur = new Paginateur($O_listeurUtilisateur);
@@ -45,7 +43,11 @@ final class ControleurDefaut
 
                 $A_pagination = $O_paginateur->paginer();
 
-                Vue::montrer ('utilisateur/liste', array('utilisateurs' => $A_utilisateurs, 'pagination' => $A_pagination));
+                Vue::montrer ('utilisateur/liste', array('utilisateurs' => $A_utilisateurs, 'pagination' => $A_pagination)); */
+
+                // plutôt que de re-lister 'manuellement' tous les utilisateurs, c'est mieux de rediriger directement vers l'action du controlleur utilisateur qui le fait déjà. Cela nous évitera d'avoir plusieurs bouts de code qui font la même chose
+
+                BoiteAOutils::redirigerVers('utilisateur/liste');
             }
         }
     }

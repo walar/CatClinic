@@ -3,18 +3,18 @@
 
   if (Authentification::estConnecte())
   {
-    $A_liens = array('/' => 'Accueil');
+    $A_liens = array();
 
     if (Authentification::estAdministrateur())
     {
-      $A_liens['/utilisateur/'] = 'Utilisateurs';
-      $A_liens['/article/'] = 'Articles';
-      $A_liens['/auteur/'] = 'Auteurs';
-      $A_liens['/categorie/'] = 'Catégories';
+      $A_liens['/utilisateur'] = 'Utilisateurs';
+      $A_liens['/article'] = 'Articles';
+      $A_liens['/auteur'] = 'Auteurs';
+      $A_liens['/categorie'] = 'Catégories';
     }
     else if (BoiteAOutils::recupererDepuisSession('utilisateur')->estProprietaire())
     {
-      $A_liens['/visites/'] = 'Mes chats';
+      $A_liens['/proprietaire/visites'] = 'Mes chats';
     }
   }
 ?>

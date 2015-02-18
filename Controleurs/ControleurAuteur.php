@@ -177,6 +177,8 @@ final class ControleurAuteur
         }
         else
         {
+          BoiteAOutils::stockerErreur("Une erreur s'est produite lors de la validation des données.");
+
           Vue::montrer('auteur/edit', array(
                        'auteur' => $O_auteur,
                        'validateur' => $O_validateur
@@ -214,6 +216,8 @@ final class ControleurAuteur
         }
         else
         {
+          BoiteAOutils::stockerErreur("Une erreur s'est produite lors de la validation des données.");
+
           Vue::montrer('auteur/creer', array(
                        'validateur' => $O_validateur
                        ));
